@@ -1,9 +1,8 @@
 'use client'
-
 import { Suspense } from 'react'
+import dynamic from 'next/dynamic'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import MapComponent from '@/components/map-component'
 import AirQualityChart from '@/components/air-quality-chart'
 import TrafficUpdates from '@/components/traffic-updates'
 import PublicTransportStatus from '@/components/public-transport-status'
@@ -16,6 +15,15 @@ import { LoginButton } from '@/components/login-button'
 import { ProtectedRoute } from '@/components/protected-route'
 import Image from 'next/image'
 import { useAuth } from '@/lib/auth-context'
+import { GeolocationCoordinates } from '@/types/location'
+
+const MapComponent = dynamic(
+  () => import('@/components/map-component'),
+  { 
+    ssr: false,
+    loading: () => <Skeleton className="h-[400px] w-full" />
+  }
+)
 
 export default function DashboardPage() {
   const { location, error } = useUserLocation()

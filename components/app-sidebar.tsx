@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/sidebar'
 import { useAuth } from '@/lib/auth-context'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export function AppSidebar() {
   const { user } = useAuth()
@@ -30,8 +31,14 @@ export function AppSidebar() {
 
   return (
     <Sidebar className="h-screen">
-      <SidebarHeader className="flex items-center justify-center py-4 bg-primary">
-        <h1 className="text-2xl font-bold text-primary-foreground">Smart City</h1>
+      <SidebarHeader className="flex items-center py-4 bg-primary pl-4">
+        <Image 
+          src="https://raw.githubusercontent.com/Simurgh1/SmartCity/main/smartspgere-logo.png?raw=true"
+          alt="Smart Sphere Logo"
+          width={70}
+          height={70}
+        />
+        <h1 className="text-2xl font-bold text-primary-foreground ml-3">Smart Sphere</h1>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

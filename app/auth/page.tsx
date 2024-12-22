@@ -49,10 +49,10 @@ export default function AuthPage() {
   return (
     <div className="container relative flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <div className="absolute inset-0 bg-primary/20" />
+        <div className="absolute inset-0 bg-[url('https://github.com/Simurgh1/SmartCity/blob/main/ppl.png?raw=true')] bg-cover bg-center bg-no-repeat" />
         <div className="relative z-20 flex items-center text-lg font-medium">
           <Image 
-            src="https://raw.githubusercontent.com/Simurgh1/SmartCity/main/smartspgere-logo.png" 
+            src="https://raw.githubusercontent.com/Simurgh1/SmartCity/main/smartspgere-logo.png?raw=true" 
             alt="SmartSphere" 
             width={200} 
             height={50} 
@@ -61,10 +61,10 @@ export default function AuthPage() {
         </div>
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
-            <p className="text-lg">
+            <p className="text-lg text-black">
               "SmartSphere has revolutionized how we manage our city. It's an invaluable tool for urban planning and citizen engagement."
             </p>
-            <footer className="text-sm">Sofia Chen, City Planner</footer>
+            <footer className="text-sm text-black">Sofia Chen, City Planner</footer>
           </blockquote>
         </div>
       </div>

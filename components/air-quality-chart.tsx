@@ -2,12 +2,13 @@
 
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { GeolocationCoordinates } from '@/types/location'
 
 interface AirQualityChartProps {
   location: GeolocationCoordinates | null
 }
 
-export default function AirQualityChart({ location }: AirQualityChartProps) {
+const AirQualityChart: React.FC<AirQualityChartProps> = ({ location }) => {
   // In a real application, you would fetch data based on the location
   const data = [
     { time: '00:00', aqi: 50 },
@@ -29,4 +30,6 @@ export default function AirQualityChart({ location }: AirQualityChartProps) {
     </ResponsiveContainer>
   )
 }
+
+export default AirQualityChart
 

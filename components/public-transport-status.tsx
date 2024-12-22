@@ -1,12 +1,16 @@
 import { Badge } from '@/components/ui/badge'
 
-const transportStatus = [
-  { id: 1, line: 'Red Line', status: 'On Time' },
-  { id: 2, line: 'Blue Line', status: 'Delayed' },
-  { id: 3, line: 'Green Line', status: 'On Time' },
-]
+interface PublicTransportStatusProps {
+  location: GeolocationCoordinates | null;
+}
 
-export default function PublicTransportStatus() {
+const PublicTransportStatus: React.FC<PublicTransportStatusProps> = ({ location }) => {
+  const transportStatus = [
+    { id: 1, line: 'Red Line', status: 'On Time' },
+    { id: 2, line: 'Blue Line', status: 'Delayed' },
+    { id: 3, line: 'Green Line', status: 'On Time' },
+  ]
+
   return (
     <div className="space-y-2">
       {transportStatus.map((item) => (
@@ -20,4 +24,6 @@ export default function PublicTransportStatus() {
     </div>
   )
 }
+
+export default PublicTransportStatus
 
