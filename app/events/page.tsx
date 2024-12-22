@@ -10,12 +10,12 @@ import MapComponent from '@/components/map-component'
 import { useUserLocation } from '@/components/use-user-location'
 
 const events = [
-  { id: 1, name: 'City Festival', date: '2023-07-15', location: 'Central Park', category: 'Festival', attendees: 5000 },
-  { id: 2, name: 'Farmers Market', date: '2023-07-16', location: 'Main Square', category: 'Market', attendees: 1000 },
-  { id: 3, name: 'Tech Conference', date: '2023-07-20', location: 'Convention Center', category: 'Conference', attendees: 2000 },
-  { id: 4, name: 'Art Exhibition', date: '2023-07-22', location: 'City Gallery', category: 'Art', attendees: 500 },
-  { id: 5, name: 'Food Truck Rally', date: '2023-07-25', location: 'Riverside Park', category: 'Food', attendees: 3000 },
-  { id: 6, name: 'Charity Run', date: '2023-07-30', location: 'City Streets', category: 'Sports', attendees: 1500 },
+  { id: 1, name: 'Bangalore Music Festival', date: '2023-08-15', location: 'Cubbon Park', category: 'Festival', attendees: 7000 },
+  { id: 2, name: 'Bangalore Farmers Market', date: '2023-08-16', location: 'Indiranagar', category: 'Market', attendees: 1200 },
+  { id: 3, name: 'Bangalore Tech Summit', date: '2023-08-20', location: 'Bangalore International Exhibition Centre', category: 'Conference', attendees: 2500 },
+  { id: 4, name: 'Bangalore Art Fair', date: '2023-08-22', location: 'National Gallery of Modern Art', category: 'Art', attendees: 800 },
+  { id: 5, name: 'Bangalore Food Truck Festival', date: '2023-08-25', location: 'MG Road', category: 'Food', attendees: 4000 },
+  { id: 6, name: 'Bangalore Charity Run', date: '2023-08-30', location: 'Cubbon Park', category: 'Sports', attendees: 2000 },
 ]
 
 export default function EventsPage() {

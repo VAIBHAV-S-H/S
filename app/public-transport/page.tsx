@@ -9,19 +9,32 @@ import MapComponent from '@/components/map-component'
 import { useUserLocation } from '@/components/use-user-location'
 
 const transportModes = [
+  { name: 'Metro', icon: Train },
   { name: 'Bus', icon: Bus },
-  { name: 'Train', icon: Train },
   { name: 'Bike Share', icon: Bike },
 ]
 
 const transportStatus = [
-  { id: 1, mode: 'Bus', line: 'Red Line', status: 'On Time' },
-  { id: 2, mode: 'Bus', line: 'Blue Line', status: 'Delayed' },
-  { id: 3, mode: 'Train', line: 'Green Line', status: 'On Time' },
-  { id: 4, mode: 'Train', line: 'Yellow Line', status: 'Cancelled' },
+  { id: 1, mode: 'Metro', line: 'Purple Line', status: 'On Time' },
+  { id: 2, mode: 'Metro', line: 'Green Line', status: 'Delayed' },
+  { id: 3, mode: 'Bus', line: 'Red Line', status: 'On Time' },
+  { id: 4, mode: 'Bus', line: 'Blue Line', status: 'Cancelled' },
   { id: 5, mode: 'Bike Share', line: 'Downtown Area', status: 'Available' },
   { id: 6, mode: 'Bike Share', line: 'University Area', status: 'Limited' },
 ]
+
+const getBadgeVariant = (status: string) => {
+  switch (status) {
+    case 'On Time':
+      return 'default';
+    case 'Delayed':
+      return 'secondary';
+    case 'Cancelled':
+      return 'destructive';
+    default:
+      return 'secondary';
+  }
+};
 
 export default function PublicTransportPage() {
   const { location } = useUserLocation()
@@ -33,17 +46,17 @@ export default function PublicTransportPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-primary">Public Transport Information</h1>
+      <h1 className="text-3xl font-bold mb-6 text-primary">Bangalore Metro Information</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
             <CardTitle>Transport Map</CardTitle>
-            <CardDescription>Public transport routes and stations</CardDescription>
+            <CardDescription>Bangalore metro routes and stations</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-[400px]">
               <MapComponent 
-                center={location ? [location.latitude, location.longitude] : [51.505, -0.09]} 
+                center={location ? [location.latitude, location.longitude] : [12.9716, 77.5946]} 
                 zoom={13}
               />
             </div>
@@ -52,7 +65,7 @@ export default function PublicTransportPage() {
         <Card>
           <CardHeader>
             <CardTitle>Transport Modes</CardTitle>
-            <CardDescription>Available public transport options</CardDescription>
+            <CardDescription>Available public transport options in Bangalore</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -68,7 +81,7 @@ export default function PublicTransportPage() {
         <Card className="md:col-span-2">
           <CardHeader>
             <CardTitle>Transport Status</CardTitle>
-            <CardDescription>Current status of public transportation</CardDescription>
+            <CardDescription>Current status of Bangalore metro and buses</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="mb-4">
@@ -78,8 +91,8 @@ export default function PublicTransportPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="Metro">Metro</SelectItem>
                   <SelectItem value="Bus">Bus</SelectItem>
-                  <SelectItem value="Train">Train</SelectItem>
                   <SelectItem value="Bike Share">Bike Share</SelectItem>
                 </SelectContent>
               </Select>
@@ -88,19 +101,12 @@ export default function PublicTransportPage() {
               {filteredStatus.map((item) => (
                 <div key={item.id} className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center">
+                    {item.mode === 'Metro' && <Train className="h-6 w-6 mr-2" />}
                     {item.mode === 'Bus' && <Bus className="h-6 w-6 mr-2" />}
-                    {item.mode === 'Train' && <Train className="h-6 w-6 mr-2" />}
                     {item.mode === 'Bike Share' && <Bike className="h-6 w-6 mr-2" />}
                     <span>{item.line}</span>
                   </div>
-                  <Badge 
-                    variant={
-                      item.status === 'On Time' ? 'default' : 
-                      item.status === 'Delayed' ? 'warning' : 
-                      item.status === 'Cancelled' ? 'destructive' : 
-                      'secondary'
-                    }
-                  >
+                  <Badge variant={getBadgeVariant(item.status)}>
                     {item.status}
                   </Badge>
                 </div>
@@ -112,4 +118,3 @@ export default function PublicTransportPage() {
     </div>
   )
 }
-
