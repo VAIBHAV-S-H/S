@@ -186,13 +186,17 @@ export default function TrafficPage() {
               </Select>
             </div>
             <div className="space-y-4">
-              {filteredUpdates.map((update) => (
-                <Alert key={update.id} variant={update.severity === 'high' ? 'destructive' : 'default'}>
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>{update.title}</AlertTitle>
-                  <AlertDescription>{update.description}</AlertDescription>
-                </Alert>
-              ))}
+              {filteredUpdates.length > 0 ? (
+                filteredUpdates.map((update) => (
+                  <Alert key={update.id} variant={update.severity === 'high' ? 'destructive' : 'default'}>
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>{update.title}</AlertTitle>
+                    <AlertDescription>{update.description}</AlertDescription>
+                  </Alert>
+                ))
+              ) : (
+                <p>No traffic updates available.</p>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -203,24 +207,28 @@ export default function TrafficPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {trafficFlow.map((item, index) => (
-                <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center">
-                    <Car className="h-6 w-6 mr-2" />
-                    <div className="flex flex-col">
-                      <span className="font-medium">{item.road}</span>
-                      {item.currentSpeed && (
-                        <span className="text-sm text-muted-foreground">
-                          Current: {Math.round(item.currentSpeed)} km/h
-                        </span>
-                      )}
+              {trafficFlow.length > 0 ? (
+                trafficFlow.map((item, index) => (
+                  <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div className="flex items-center">
+                      <Car className="h-6 w-6 mr-2" />
+                      <div className="flex flex-col">
+                        <span className="font-medium">{item.road}</span>
+                        {item.currentSpeed && (
+                          <span className="text-sm text-muted-foreground">
+                            Current: {Math.round(item.currentSpeed)} km/h
+                          </span>
+                        )}
+                      </div>
                     </div>
+                    <Badge variant={item.level === 'Heavy' ? 'destructive' : item.level === 'Moderate' ? 'default' : 'secondary'}>
+                      {item.level}
+                    </Badge>
                   </div>
-                  <Badge variant={item.level === 'Heavy' ? 'destructive' : item.level === 'Moderate' ? 'default' : 'secondary'}>
-                    {item.level}
-                  </Badge>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p>No current traffic levels available.</p>
+              )}
             </div>
           </CardContent>
         </Card>

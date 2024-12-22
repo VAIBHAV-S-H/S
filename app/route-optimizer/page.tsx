@@ -27,7 +27,6 @@ const OptimizedTrafficTool = () => {
       Promise.all([
         import('mapbox-gl'),
         import('@tomtom-international/web-sdk-services'),
-        import('mapbox-gl/dist/mapbox-gl.css')
       ]).then(([mapboxglModule, ttModule]) => {
         setMapboxgl(mapboxglModule.default);
         setTt(ttModule.default);
