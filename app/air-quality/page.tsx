@@ -112,7 +112,7 @@ export default function AirQualityPage() {
             <div className="h-[400px] relative">
               {location && (
                 <img
-                  src={`https://tile.openweathermap.org/map/aqi/5/${getTileCoordinates(Math.round(location.latitude), Math.round(location.longitude), 5).x}/${getTileCoordinates(Math.round(location.latitude), Math.round(location.longitude), 5).y}.png?appid=${API_KEY}`}
+                  src={`https://tile.openweathermap.org/map/wind_new/4/${getTileCoordinates(Math.round(location.latitude), Math.round(location.longitude), 4).x}/${getTileCoordinates(Math.round(location.latitude), Math.round(location.longitude), 4).y}.png?appid=${API_KEY}`}
                   alt="Air Quality Map"
                   onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/400'; }}
                   className="absolute inset-0 w-full h-full object-cover border"
