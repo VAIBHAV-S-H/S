@@ -7,7 +7,8 @@ const nextConfig = {
             'www.sqs.es', 
             'www.dispatchtrack.com',
             'raw.githubusercontent.com',
-            'github.com'
+            'github.com',
+            'tile.openweathermap.org'
         ],
     },
 }

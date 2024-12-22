@@ -1,43 +1,103 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Wind } from 'lucide-react'
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import MapComponent from '@/components/map-component'
-import { useUserLocation } from '@/components/use-user-location'
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { useUserLocation } from '@/components/use-user-location';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
-const airQualityData = [
-  { time: '00:00', aqi: 50 },
-  { time: '04:00', aqi: 45 },
-  { time: '08:00', aqi: 60 },
-  { time: '12:00', aqi: 75 },
-  { time: '16:00', aqi: 70 },
-  { time: '20:00', aqi: 55 },
-]
-
-const pollutants = [
-  { name: 'PM2.5', level: 12, unit: 'µg/m³' },
-  { name: 'PM10', level: 20, unit: 'µg/m³' },
-  { name: 'O3', level: 60, unit: 'ppb' },
-  { name: 'NO2', level: 15, unit: 'ppb' },
-  { name: 'SO2', level: 5, unit: 'ppb' },
-  { name: 'CO', level: 0.8, unit: 'ppm' },
-]
-
-function getAQICategory(aqi: number) {
-  if (aqi <= 50) return { label: 'Good', color: 'bg-green-500' }
-  if (aqi <= 100) return { label: 'Moderate', color: 'bg-yellow-500' }
-  if (aqi <= 150) return { label: 'Unhealthy for Sensitive Groups', color: 'bg-orange-500' }
-  if (aqi <= 200) return { label: 'Unhealthy', color: 'bg-red-500' }
-  if (aqi <= 300) return { label: 'Very Unhealthy', color: 'bg-purple-500' }
-  return { label: 'Hazardous', color: 'bg-rose-900' }
+interface AirQualityData {
+  main: {
+    aqi: number;
+  };
+  components: {
+    co: number;
+    no2: number;
+    o3: number;
+    so2: number;
+    pm2_5: number;
+    pm10: number;
+    nh3: number;
+  };
 }
 
+interface WeatherData {
+  main: {
+    temp: number;
+    feels_like: number;
+    pressure: number;
+    humidity: number;
+  };
+  wind: {
+    speed: number;
+    deg: number;
+  };
+}
+
+const airQualityTrendData = [];
+
+const getTileCoordinates = (lat: number, lon: number, zoom: number) => {
+  const latRad = (lat * Math.PI) / 180;
+  const n = Math.pow(2, zoom);
+  const x = Math.floor((lon + 180) / 360 * n);
+  const y = Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n);
+  console.log('Tile Coordinates:', { x, y });
+  return { x, y };
+};
+
 export default function AirQualityPage() {
-  const { location } = useUserLocation()
-  const currentAQI = airQualityData[airQualityData.length - 1].aqi
-  const aqiCategory = getAQICategory(currentAQI)
+  const { location } = useUserLocation();
+  const [airQualityData, setAirQualityData] = useState<AirQualityData | null>(null);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [airQualityTrendData, setAirQualityTrendData] = useState([]);
+
+  const API_KEY = 'bfd91128fa25029a35111c2090bef0f5';
+  const BASE_URL = 'http://api.openweathermap.org/data/2.5';
+
+  useEffect(() => {
+    const fetchAirQualityData = async () => {
+      if (location) {
+        try {
+          const response = await fetch(
+            `${BASE_URL}/air_pollution?lat=${location.latitude}&lon=${location.longitude}&appid=${API_KEY}`
+          );
+          const data = await response.json();
+          setAirQualityData(data.list[0]);
+          setAirQualityTrendData(data.list.map((item: { dt_txt: string; main: { aqi: number } }) => ({
+            time: item.dt_txt,
+            aqi: item.main.aqi,
+          })));
+        } catch (error) {
+          console.error('Error fetching air quality data:', error);
+        }
+      }
+    };
+
+    const fetchWeatherData = async () => {
+      if (location) {
+        try {
+          const response = await fetch(
+            `${BASE_URL}/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${API_KEY}&units=metric`
+          );
+          const data = await response.json();
+          console.log(data);
+          setWeatherData(data);
+        } catch (error) {
+          console.error('Error fetching weather data:', error);
+        }
+      }
+    };
+
+    fetchAirQualityData();
+    fetchWeatherData();
+
+    const interval = setInterval(() => {
+      fetchAirQualityData();
+      fetchWeatherData();
+    }, 5 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, [location]);
 
   return (
     <div className="container mx-auto p-4">
@@ -49,11 +109,16 @@ export default function AirQualityPage() {
             <CardDescription>Current air quality conditions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[400px]">
-              <MapComponent 
-                center={location ? [location.latitude, location.longitude] : [51.505, -0.09]} 
-                zoom={13}
-              />
+            <div className="h-[400px] relative">
+              {location && (
+                <img
+                  src={`https://tile.openweathermap.org/map/aqi/5/${getTileCoordinates(Math.round(location.latitude), Math.round(location.longitude), 5).x}/${getTileCoordinates(Math.round(location.latitude), Math.round(location.longitude), 5).y}.png?appid=${API_KEY}`}
+                  alt="Air Quality Map"
+                  onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/400'; }}
+                  className="absolute inset-0 w-full h-full object-cover border"
+                />
+              )}
+              {/* Placeholder for map */}
             </div>
           </CardContent>
         </Card>
@@ -65,12 +130,16 @@ export default function AirQualityPage() {
           <CardContent>
             <div className="mb-4 flex items-center justify-between">
               <div>
-                <span className="text-2xl font-bold">{currentAQI}</span>
-                <Badge className={`ml-2 ${aqiCategory.color}`}>{aqiCategory.label}</Badge>
+                <span className="text-2xl font-bold">
+                  {airQualityData ? airQualityData.main.aqi : 'Loading...'}
+                </span>
+                <Badge className={`ml-2 ${airQualityData?.main?.aqi !== undefined && airQualityData.main.aqi <= 50 ? 'bg-green-500' : airQualityData?.main?.aqi !== undefined && airQualityData.main.aqi <= 100 ? 'bg-yellow-500' : 'bg-red-500'}`}>
+                  {airQualityData?.main?.aqi !== undefined ? airQualityData.main.aqi : 'Loading...'}
+                </Badge>
               </div>
             </div>
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={airQualityData}>
+              <LineChart data={airQualityTrendData}>
                 <XAxis dataKey="time" />
                 <YAxis />
                 <Tooltip />
@@ -86,22 +155,62 @@ export default function AirQualityPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {pollutants.map((pollutant, index) => (
-                <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center">
-                    <Wind className="h-6 w-6 mr-2" />
-                    <span>{pollutant.name}</span>
-                  </div>
-                  <Badge variant="secondary">
-                    {pollutant.level} {pollutant.unit}
+              <div className="flex items-center justify-between p-4 border rounded-lg">
+                <span>PM2.5</span>
+                <Badge>{airQualityData ? airQualityData.components.pm2_5 : 'Loading...'} μg/m³</Badge>
+              </div>
+              <div className="flex items-center justify-between p-4 border rounded-lg">
+                <span>PM10</span>
+                <Badge>{airQualityData ? airQualityData.components.pm10 : 'Loading...'} μg/m³</Badge>
+              </div>
+              <div className="flex items-center justify-between p-4 border rounded-lg">
+                <span>NO2</span>
+                <Badge>{airQualityData ? airQualityData.components.no2 : 'Loading...'} μg/m³</Badge>
+              </div>
+              <div className="flex items-center justify-between p-4 border rounded-lg">
+                <span>SO2</span>
+                <Badge>{airQualityData ? airQualityData.components.so2 : 'Loading...'} μg/m³</Badge>
+              </div>
+              <div className="flex items-center justify-between p-4 border rounded-lg">
+                <span>O3</span>
+                <Badge>{airQualityData ? airQualityData.components.o3 : 'Loading...'} μg/m³</Badge>
+              </div>
+              <div className="flex items-center justify-between p-4 border rounded-lg">
+                <span>CO</span>
+                <Badge>{airQualityData ? airQualityData.components.co : 'Loading...'} μg/m³</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Current Weather</CardTitle>
+            <CardDescription>Current weather conditions</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {weatherData ? (
+              <div className="mb-4 flex items-center justify-between">
+                <div>
+                  <span className="text-2xl font-bold">
+                    Temperature: {weatherData.main?.temp ?? 'N/A'} °C
+                  </span>
+                  <Badge className={`ml-2 ${weatherData.main?.temp <= 15 ? 'bg-blue-500' : weatherData.main?.temp <= 25 ? 'bg-yellow-500' : 'bg-red-500'}`}>
+                    {weatherData.main?.temp ?? 'N/A'} °C
                   </Badge>
                 </div>
-              ))}
-            </div>
+                <div>
+                  <p>Feels Like: {weatherData.main?.feels_like ?? 'N/A'} °C</p>
+                  <p>Humidity: {weatherData.main?.humidity ?? 'N/A'} %</p>
+                  <p>Wind Speed: {weatherData.wind?.speed ?? 'N/A'} m/s</p>
+                </div>
+              </div>
+            ) : (
+              <p>Loading weather data...</p>
+            )}
           </CardContent>
         </Card>
       </div>
     </div>
-  )
+  );
 }
 
