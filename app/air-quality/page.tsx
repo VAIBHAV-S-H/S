@@ -34,6 +34,11 @@ interface WeatherData {
   };
 }
 
+interface AirQualityTrend {
+  time: string;
+  aqi: number;
+}
+
 const airQualityTrendData = [];
 
 const getTileCoordinates = (lat: number, lon: number, zoom: number) => {
@@ -49,7 +54,7 @@ export default function AirQualityPage() {
   const { location } = useUserLocation();
   const [airQualityData, setAirQualityData] = useState<AirQualityData | null>(null);
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-  const [airQualityTrendData, setAirQualityTrendData] = useState([]);
+  const [airQualityTrendData, setAirQualityTrendData] = useState<AirQualityTrend[]>([]);
 
   const API_KEY = 'bfd91128fa25029a35111c2090bef0f5';
   const BASE_URL = 'http://api.openweathermap.org/data/2.5';
