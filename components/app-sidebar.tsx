@@ -14,9 +14,12 @@ import {
 import { useAuth } from '@/lib/auth-context'
 import Link from 'next/link'
 import Image from 'next/image'
+import { cn } from '@/lib/utils'
+import { usePathname } from 'next/navigation'
 
 export function AppSidebar() {
   const { user } = useAuth()
+  const pathname = usePathname()
 
   const navItems = [
     { icon: Home, label: 'Overview', href: '/' },
@@ -48,7 +51,15 @@ export function AppSidebar() {
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.href}>
+                    <Link 
+                      href={item.href}
+                      className={cn(
+                        "flex items-center w-full p-2 rounded-md transition-colors",
+                        "hover:bg-accent hover:text-accent-foreground",
+                        pathname === item.href && "bg-accent text-accent-foreground",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      )}
+                    >
                       <item.icon className="mr-2 h-4 w-4" />
                       <span>{item.label}</span>
                     </Link>

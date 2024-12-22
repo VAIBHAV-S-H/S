@@ -1,5 +1,8 @@
-import { toast } from "./toast"
+import { toast as sonnerToast } from "sonner"
 
-export const useToast = () => {
-  return { toast }
+export function useToast() {
+  return {
+    toast: sonnerToast,
+    dismiss: sonnerToast.dismiss,
+  }
 }
