@@ -52,7 +52,7 @@ export default function AuthPage() {
         <div className="absolute inset-0 bg-primary/20" />
         <div className="relative z-20 flex items-center text-lg font-medium">
           <Image 
-            src="/smartsphere-logo.png" 
+            src="https://raw.githubusercontent.com/Simurgh1/SmartCity/main/smartspgere-logo.png" 
             alt="SmartSphere" 
             width={200} 
             height={50} 

@@ -23,7 +23,7 @@ export default function CoverPage() {
   return (
     <div className="relative h-screen w-full overflow-hidden">
       <Image
-        src="https://www.sqs.es/wp-content/uploads/2021/11/Smart-city-980x649.jpg"
+        src="https://github.com/Simurgh1/SmartCity/blob/main/Smart-city.jpg?raw=true"
         alt="Smart City Landscape"
         layout="fill"
         objectFit="cover"

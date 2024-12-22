@@ -111,7 +111,7 @@ export default function DashboardPage() {
                   <Link href="/route-optimizer" className="block">
                     <div className="aspect-[16/9] rounded-md bg-muted relative overflow-hidden group">
                       <Image
-                        src="https://www.dispatchtrack.com/hs-fs/hubfs/saas%20logistics%20software.webp?width=1800&name=saas%20logistics%20software.webp"
+                        src="https://github.com/Simurgh1/SmartCity/blob/main/Ro.jpeg?raw=true"
                         alt="Route Optimization Preview"
                         layout="fill"
                         objectFit="cover"
