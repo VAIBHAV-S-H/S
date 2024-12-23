@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { useUserLocation } from '@/components/use-user-location';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import Image from 'next/image';
 
 interface AirQualityData {
   main: {
@@ -116,11 +117,13 @@ export default function AirQualityPage() {
           <CardContent>
             <div className="h-[400px] relative">
               {location && (
-                <img
+                <Image
                   src={`https://tile.openweathermap.org/map/wind_new/4/${getTileCoordinates(Math.round(location.latitude), Math.round(location.longitude), 4).x}/${getTileCoordinates(Math.round(location.latitude), Math.round(location.longitude), 4).y}.png?appid=${API_KEY}`}
                   alt="Air Quality Map"
                   onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/400'; }}
                   className="absolute inset-0 w-full h-full object-cover border"
+                  width={400}
+                  height={400}
                 />
               )}
               {/* Placeholder for map */}
