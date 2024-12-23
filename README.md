@@ -12,25 +12,25 @@ SmartSphere is a comprehensive smart city dashboard application built with **Nex
 
 ## Features
 
-- **Interactive City Map**: Visualize key locations and data points across the city.
-- **Real-time Air Quality Monitoring**: Track and display air quality indices for different areas.
-- **Traffic Updates**: Current traffic conditions and incident reports.
-- **Public Transport Status**: Real-time updates on public transportation services.
-- **Local Events Calendar**: Upcoming city events.
-- **Route Optimization**: Intelligent route planning for efficient travel.
-- **User Authentication**: Secure login and registration system.
-- **Responsive Design**: Fully responsive interface for desktop and mobile.
-- **Dark Mode**: Toggle between light and dark themes.
+- Interactive City Map: Visualize key locations and data points across the city.
+- Real-time Air Quality Monitoring: Track and display air quality indices for different areas.
+- Traffic Updates: Current traffic conditions and incident reports.
+- Public Transport Status: Real-time updates on public transportation services.
+- Local Events Calendar: Upcoming city events.
+- Route Optimization: Intelligent route planning for efficient travel.
+- User Authentication: Secure login and registration system.
+- Responsive Design: Fully responsive interface for desktop and mobile.
+- Dark Mode: Toggle between light and dark themes.
 
 ## Tech Stack
 
-- **Next.js 13** (App Router)
-- **React 18**
-- **Tailwind CSS**
-- **Framer Motion** (for animations)
-- **Mapbox GL** (for mapping)
-- **Recharts** (for data visualization)
-- **shadcn/ui** (for UI components)
+- Next.js 13 (App Router)
+- React 18
+- Tailwind CSS
+- Framer Motion (for animations)
+- Mapbox GL (for mapping)
+- Recharts (for data visualization)
+- shadcn/ui (for UI components)
 
 ## Getting Started
 
