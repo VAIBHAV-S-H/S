@@ -45,7 +45,7 @@ SmartSphere is a comprehensive smart city dashboard application built with **Nex
 1. **Clone the repository**:
 
 ```bash
-[git clone https://github.com/yourusername/smartsphere.git](https://github.com/VAIBHAV-S-H/SmartSphere.git)
+(https://github.com/VAIBHAV-S-H/SmartSphere.git)
 ```
 2. **Navigate to the project directory**:
 ```bash
