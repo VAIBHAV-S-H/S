@@ -7,10 +7,9 @@ import 'leaflet/dist/leaflet.css'
 interface MapComponentProps {
   center: [number, number]
   zoom: number
-  markers?: Array<{ position: [number, number]; popup: string }>
 }
 
-export default function MapComponent({ center, zoom, markers = [] }: MapComponentProps) {
+export default function MapComponent({ center, zoom }: MapComponentProps) {
   const mapRef = useRef<L.Map | null>(null)
 
   // Initialize map

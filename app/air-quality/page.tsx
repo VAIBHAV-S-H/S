@@ -40,8 +40,6 @@ interface AirQualityTrend {
   aqi: number;
 }
 
-const airQualityTrendData = [];
-
 const getTileCoordinates = (lat: number, lon: number, zoom: number) => {
   const latRad = (lat * Math.PI) / 180;
   const n = Math.pow(2, zoom);

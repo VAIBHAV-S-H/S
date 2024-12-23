@@ -1,3 +1,4 @@
+import React from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
 
@@ -13,6 +14,14 @@ const trafficUpdates = [
 const TrafficUpdates: React.FC<TrafficUpdatesProps> = ({ location }) => {
   return (
     <div className="space-y-4">
+      {location ? (
+        <p>
+          Current Location: Latitude {location.latitude}, Longitude {location.longitude}
+        </p>
+      ) : (
+        <p>Location not available.</p>
+      )}
+      
       {trafficUpdates.map((update) => (
         <Alert key={update.id} variant="destructive">
           <AlertCircle className="h-4 w-4" />

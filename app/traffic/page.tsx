@@ -26,7 +26,6 @@ interface TrafficFlow {
 }
 
 const TOMTOM_API_KEY = 'OOGQ6D5aOrt57WK9I1YxBg7lxrTjSWpr'
-const TOMTOM_API_BASE = 'https://api.tomtom.com/traffic'
 
 export default function TrafficPage() {
   const { location } = useUserLocation()
@@ -235,11 +234,5 @@ export default function TrafficPage() {
       </div>
     </div>
   )
-}
-
-function determineSeverity(category: string): string {
-  if (category?.includes('accident') || category?.includes('closure')) return 'high'
-  if (category?.includes('slow') || category?.includes('queue')) return 'medium'
-  return 'low'
 }
 

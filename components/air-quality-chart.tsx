@@ -1,8 +1,6 @@
 'use client'
 
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { GeolocationCoordinates } from '@/types/location'
 
 interface AirQualityChartProps {
   location: GeolocationCoordinates | null

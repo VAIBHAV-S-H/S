@@ -15,7 +15,6 @@ import { LoginButton } from '@/components/login-button'
 import { ProtectedRoute } from '@/components/protected-route'
 import Image from 'next/image'
 import { useAuth } from '@/lib/auth-context'
-import { GeolocationCoordinates } from '@/types/location'
 
 const MapComponent = dynamic(
   () => import('@/components/map-component'),

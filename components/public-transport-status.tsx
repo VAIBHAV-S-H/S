@@ -1,10 +1,7 @@
+import React from 'react';
 import { Badge } from '@/components/ui/badge'
 
-interface PublicTransportStatusProps {
-  location: GeolocationCoordinates | null;
-}
-
-const PublicTransportStatus: React.FC<PublicTransportStatusProps> = ({ location }) => {
+const PublicTransportStatus = () => {
   const transportStatus = [
     { id: 1, line: 'Red Line', status: 'On Time' },
     { id: 2, line: 'Blue Line', status: 'Delayed' },
