@@ -3,7 +3,7 @@
 
 ## Overview
 
-SmartSphere is a comprehensive smart city dashboard application built with **Next.js**, **React**, and **Tailwind CSS**. It provides real-time information and analytics on various aspects of urban life, including:
+SmartSphere is a comprehensive smart city dashboard application built with Next.js, React, and Tailwind CSS. It provides real-time information and analytics on various aspects of urban life, including:
 
 - Traffic
 - Air quality
