@@ -1,9 +1,10 @@
 'use client'
 
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { GeolocationCoordinates } from '@/types/location';
 
 interface AirQualityChartProps {
-  location: GeolocationCoordinates | null
+  location: GeolocationCoordinates | null;
 }
 
 const AirQualityChart: React.FC<AirQualityChartProps> = ({ location }) => {

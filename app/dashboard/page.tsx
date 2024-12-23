@@ -81,7 +81,7 @@ export default function DashboardPage() {
                     <CardDescription>Real-time air quality index for your location</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Suspense fallback={<Skeleton className="h-[300px] w-full" />}>
+                    <Suspense fallback={<Skeleton className="h-[200px] w-full" />}>
                       <AirQualityChart location={location} />
                     </Suspense>
                   </CardContent>
