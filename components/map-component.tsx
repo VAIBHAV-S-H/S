@@ -33,7 +33,7 @@ export default function MapComponent({ center, zoom, markers = [] }: MapComponen
         mapRef.current = null
       }
     }
-  }, [])
+  }, [center, zoom])
 
   // Update map view when center or zoom changes
   useEffect(() => {

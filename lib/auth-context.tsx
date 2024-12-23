@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string) => {
     // Here you would typically make an API call to authenticate the user
     // For this example, we'll just simulate a successful login
     const user = { name: 'John Doe', email }
@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('user', JSON.stringify(user))
   }
 
-  const register = async (email: string, password: string) => {
+  const register = async (email: string) => {
     // Here you would typically make an API call to register the user
     // For this example, we'll just simulate a successful registration
     const user = { name: 'John Doe', email }

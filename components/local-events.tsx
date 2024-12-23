@@ -1,10 +1,6 @@
 import { CalendarDays } from 'lucide-react'
 
-interface LocalEventsProps {
-  location: GeolocationCoordinates | null;
-}
-
-const LocalEvents: React.FC<LocalEventsProps> = ({ location }) => {
+const LocalEvents: React.FC = () => {
   const events = [
     { id: 1, name: 'City Festival', date: '2023-07-15', location: 'Central Park' },
     { id: 2, name: 'Farmers Market', date: '2023-07-16', location: 'Main Square' },
